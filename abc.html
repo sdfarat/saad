@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Document</title>
+   <link rel="stylesheet" href="css/bootstrap.min.css">
+</head>
+<body>
+
+
+<h2>Index</h2>
+
+<table class="table table-striped">
+   <tr>
+       
+   </tr>
+   <tbody>
+
+   </tbody>
+</table>
+
+<div class="btn btn-success" id="click">
+   Click Me
+</div>
+
+<script>
+   let btn = document.getElementById('click');
+   btn.addEventListener("click", function () {
+       let sendReq = new XMLHttpRequest();
+       sendReq.open("GET", "http://localhost:63548/api/BooksAPI");
+       sendReq.send();
+
+       sendReq.onload = () => {
+           let data = JSON.parse(sendReq.response);
+           let values = '';
+           let header = "<th>ID</th> <th>Name</th> <th>Price</th>";
+           for (let i = 0; i < data.length; i++) {
+               values += "<tr><td>" + data[i].id_pk + "</td><td>" + data[i].book_name + "</td><td>" + data[i].book_price + "</td></tr>"
+           }
+           let table = document.querySelector('.table');
+           table.children[0].innerHTML = header;
+
+           table.children[1].innerHTML = values;
+       }
+
+   })
+</script>
+</body>
+</html>
